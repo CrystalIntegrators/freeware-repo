@@ -37,5 +37,5 @@ CLASSES=vendor
 # non-standard ICE variables used in the package build
 #
 
-LOCALOPT=/opt
+LOCALOPT=/webapp
 SOURCEURL=http://www.zlib.net

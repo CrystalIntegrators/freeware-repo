@@ -37,7 +37,7 @@ CLASSES=vendor
 # non-standard ICE variables
 # used in the package build
 #
-LOCALOPT=/opt
+LOCALOPT=/webapp
 HTTP_USER=rswanson%40me.com
 HTTP_PASS=Th1spa55
 SOURCEURL=https://download.oracle.com/otn/berkeley-db

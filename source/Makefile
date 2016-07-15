@@ -109,9 +109,9 @@ SHORT_VER := $(shell echo ${VER} | sed -e 's/\.//' -e 's/\..*//')
 BRANCH := $(shell echo ${VER} | cut -d'.' -f1,2)
 OPT_STRING := $(shell echo ${LOCALOPT} | sed -e 's@/@@')
 SPOOLDIR=\/var\/spool\/pkg
-ARCHDIR=\/${MOUNTDIR}\/${LABEL}\/develop\/archive\/${OSNAME}${BITS}\/${OSVER}
-SOURCEDIR=\/${MOUNTDIR}\/${LABEL}\/develop\/source
-STAGEDIR=\/${MOUNTDIR}\/${LABEL}\/develop\/staged
+ARCHDIR=\/${MOUNTDIR}\/${LABEL}\/freeware\/archive\/${OSNAME}${BITS}\/${OSVER}
+SOURCEDIR=\/${MOUNTDIR}\/${LABEL}\/freeware\/source
+STAGEDIR=\/${MOUNTDIR}\/${LABEL}\/freeware\/staged
 THISDIR=${SOURCEDIR}\/${PKG}
 
 all: software stage distribution
