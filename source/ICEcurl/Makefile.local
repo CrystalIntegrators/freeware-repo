@@ -1,0 +1,71 @@
+#
+# File: ICEcurl/Makefile.local
+#
+# Note: none
+#
+# --------------------------------------------------------------------------
+# $Id: Makefile.local 4 2012-11-15 21:43:41Z svwebadmin $
+# --------------------------------------------------------------------------
+
+#
+# Build software
+#
+
+software: chk veryclean
+	
+	mkdir ${PWD}/source; cd ${PWD}/source; \
+	gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf -
+	cd source/${NAME}-${VER}; \
+	export PKG_CONFIG_PATH=${LOCALOPT}/local/lib${BITS}/pkgconfig; \
+	./configure --help > ${PWD}/${NAME}_config.help; \
+	./configure \
+	  --with-zlib=${LOCALOPT}/local \
+	  --with-ssl=${LOCALOPT}/local \
+	  --prefix=${LOCALOPT}/local \
+	  --libdir=${LOCALOPT}/local/lib${BITS} \
+	  --enable-http \
+	  --enable-ftp \
+	; install -m 666 ${PWD}/source/${NAME}-${VER}/config.log ${PWD}/${NAME}_config.log \
+	; install -m 666 ${PWD}/source/${NAME}-${VER}/README ${PWD}/${NAME}_readme.txt \
+	; make 2>&1 | tee ${PWD}/${NAME}_build.log
+
+#
+# Stage software
+#
+
+stage: chk
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -f vendor; \
+	  rm -Rf ${STAGEDIR}/${PKG}; \
+	"
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  install -d -m 755 -o root -g web  ${STAGEDIR}/${PKG}; \
+	  install -d -m 2775 -o root -g web  ${STAGEDIR}/${PKG}${LOCALOPT}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/bin; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/lib${BITS}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/include; \
+	  ln -s ${STAGEDIR}/${PKG} vendor; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  umask 002; \
+          export OBJECT_MODE=${BITS}; \
+	  cd source/${NAME}-${VER}; \
+	  make DESTDIR=${STAGEDIR}/${PKG} install 2>&1 | tee ${PWD}/${NAME}_stage.log; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -rf vendor${LOCALOPT}/local/share; \
+	"
+
+
+# Get zipped tar-balls from the author(s)
+#
+
+downloads:
+	
+	cd ../downloads; \
+	rm -f ${NAME}-*.tar.gz; \
+	wget ${SOURCEURL}/download/${NAME}-${VER}.tar.gz

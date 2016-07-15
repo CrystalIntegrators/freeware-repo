@@ -1,0 +1,41 @@
+#
+# NAME
+#
+#   ICEpcre/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for the ICEpcre package
+#
+# NOTES
+#
+#   blah
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+
+PKG=ICEpcre
+NAME=pcre
+VERSION=8.36
+VENDOR=Crystal Integrators
+HOTLINE=none
+EMAIL=support@crystalintegrators.com
+CATEGORY=application
+BASEDIR=/
+CLASSES=vendor
+
+#
+# non-standard ICE variables used in the package build
+#
+
+LOCALOPT=/opt
+SOURCEURL=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre

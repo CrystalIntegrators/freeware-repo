@@ -1,0 +1,218 @@
+#
+# File: ICEhttpd/Makefile.local
+#
+# Note: none
+#
+# --------------------------------------------------------------------------
+# $Id: Makefile.local 7 2012-11-15 22:39:57Z svwebadmin $
+# --------------------------------------------------------------------------
+
+#
+# Build software
+#
+
+software: chk veryclean
+	
+	mkdir ${PWD}/source
+	
+	if [ "${BRANCH}" == "2.2" ] ; then \
+	  cd source; \
+	  gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf - ; \
+	  cd ${NAME}-${VER}; \
+	  ./configure --help > ${PWD}/${NAME}_${VER}_config.help; \
+	  ./configure \
+	    --disable-option-checking \
+	    --verbose \
+	    --prefix=${LOCALOPT}/apache/${VER} \
+	    --with-ssl=${LOCALOPT}/local \
+	    --with-z=${LOCALOPT}/local/lib${BITS} \
+	    --with-berkeley-db=${LOCALOPT}/local/include:${LOCALOPT}/local/lib${BITS} \
+	    --with-dbm=${DBVER} \
+	    --with-included-apr \
+	    --with-mpm=worker \
+	    --enable-ssl \
+	    --enable-so \
+	    --enable-rewrite \
+	    --enable-headers \
+	    --enable-expires \
+	    --enable-cache \
+	    --enable-mem_cache \
+	    --enable-disk_cache \
+	    --enable-file_cache \
+	    --enable-proxy \
+	    --enable-proxy_balancer \
+	    --enable-proxy_connect \
+	    --enable-proxy_ftp \
+	    --enable-proxy_http \
+	    --enable-proxy_ajp \
+	    --enable-status \
+	    --enable-substitute \
+	    --enable-deflate \
+	    --enable-info \
+	    --enable-cgi \
+	    --enable-imagemap \
+	    --enable-reqtimeout \
+	  ; install -m 666 ${PWD}/source/${NAME}-${VER}/config.log ${PWD}/config.log \
+	  ; install -m 666 ${PWD}/source/${NAME}-${VER}/README ${PWD}/readme.txt \
+	  ; make 2>&1 | tee ${PWD}/${NAME}_${VER}_build.log; \
+	fi
+	
+	if [ "${BRANCH}" == "2.4" ] ; then \
+	  cd source; \
+	  gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf - ; \
+	  cd ${NAME}-${VER}/srclib; \
+	  gzip -dc ../../../../downloads/apr-${APRVER}.tar.gz | tar xvf - ; mv apr-${APRVER} apr ; \
+	  gzip -dc ../../../../downloads/apr-util-${APRUTILVER}.tar.gz | tar xvf - ; mv apr-util-${APRUTILVER} apr-util ; \
+	  cd .. ; \
+	  ./configure --help > ${PWD}/${NAME}_${VER}_config.help; \
+	  export MOD_XML2ENC_LDADD="-L${LOCALOPT}/local/lib${BITS} -R${LOCALOPT}/local/lib${BITS}" ; \
+	  export MOD_PROXY_HTML_LDADD="-L${LOCALOPT}/local/lib${BITS} -R${LOCALOPT}/local/lib${BITS}" ; \
+	  ./configure \
+	    --disable-option-checking \
+	    --prefix=${LOCALOPT}/apache/${VER} \
+	    --with-ssl=${LOCALOPT}/local \
+	    --with-z=${LOCALOPT}/local/lib${BITS} \
+	    --with-berkeley-db=${LOCALOPT}/local/include:${LOCALOPT}/local/lib${BITS} \
+	    --with-libxml2=${LOCALOPT}/local/include/libxml2 \
+	    --with-dbm=${DBVER} \
+	    --with-included-apr \
+	    --with-apr=../apr \
+	    --with-pcre=${LOCALOPT}/local/bin/pcre-config \
+	    --with-mpm=worker \
+	    --with-ldap \
+	    --enable-auth-basic=static \
+	    --enable-authn-core=static \
+	    --enable-authn-file \
+	    --enable-authz-core=static \
+	    --enable-authz-compat=static \
+	    --enable-authz-host \
+	    --enable-authz-user \
+	    --enable-authz-ldap \
+	    --enable-rewrite=static \
+	    --enable-access_compat=static \
+	    --enable-actions=static \
+	    --enable-alias=static \
+	    --enable-allowmethods=static \
+	    --enable-autoindex=static \
+	    --enable-buffer=static \
+	    --enable-cache_disk=static \
+	    --enable-cache_socache=static \
+	    --enable-cgid=static \
+	    --enable-dir=static \
+	    --enable-dumpio=static \
+	    --enable-env=static \
+	    --enable-ext_filter=static \
+	    --enable-filter=static \
+	    --enable-include=static \
+	    --enable-lbmethod_bybusyness=static \
+	    --enable-lbmethod_byrequests=static \
+	    --enable-lbmethod_bytraffic=static \
+	    --enable-lbmethod_heartbeat=static \
+	    --enable-log_config=static \
+	    --enable-log_debug=static \
+	    --enable-logio=static \
+	    --enable-macro=static \
+	    --enable-mime=static \
+	    --enable-xml2enc=static \
+	    --enable-negotiation=static \
+	    --enable-proxy_connect=static \
+	    --enable-proxy_express=static \
+	    --enable-proxy_html=static \
+	    --enable-proxy_fcgi=static \
+	    --enable-proxy_scgi=static \
+	    --enable-proxy_wstunnel=static \
+	    --enable-ratelimit=static \
+	    --enable-remoteip=static \
+	    --enable-request=static \
+	    --enable-sed \
+	    --enable-substitute=static \
+	    --enable-session=static \
+	    --enable-session_cookie=static \
+	    --enable-session_dbd=static \
+	    --enable-setenvif=static \
+	    --enable-slotmem_shm=static \
+	    --enable-socache_dbm=static \
+	    --enable-socache_memcache=static \
+	    --enable-socache_shmcb=static \
+	    --enable-speling=static \
+	    --enable-unique_id=static \
+	    --enable-unixd=static \
+	    --enable-version=static \
+	    --enable-vhost_alias=static \
+	    --enable-ssl=static \
+	    --enable-so=static \
+	    --enable-rewrite=static \
+	    --enable-headers=static \
+	    --enable-expires=static \
+	    --enable-cache=static \
+	    --enable-mem_cache=static \
+	    --enable-disk_cache=static \
+	    --enable-file_cache=static \
+	    --enable-proxy=static \
+	    --enable-proxy_balancer=static \
+	    --enable-proxy_connectc=static \
+	    --enable-proxy_ftp=static \
+	    --enable-proxy_http=static \
+	    --enable-proxy_ajp \
+	    --enable-status=static \
+	    --enable-sed \
+	    --enable-deflate=static \
+	    --enable-info=static \
+	    --enable-imagemap=static \
+	    --enable-reqtimeout=static \
+	    --enable-mime-magic=static \
+	  ; install -m 666 ${PWD}/source/${NAME}-${VER}/config.log ${PWD}/config.log \
+	  ; install -m 666 ${PWD}/source/${NAME}-${VER}/README ${PWD}/readme.txt \
+	  ; make 2>&1 | tee ${PWD}/${NAME}_${VER}_build.log; \
+	fi
+
+#
+# Stage software
+#
+
+stage: chk
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -f vendor; \
+	  rm -Rf ${STAGEDIR}/${PKG}; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  install -d -m 755 -o root -g web ${STAGEDIR}/${PKG}; \
+	  install -d -m 2775 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}; \
+	  install -d -m 2555 -o apache   -g web ${STAGEDIR}/${PKG}${LOCALOPT}/apache; \
+	  install -d -m 2555 -o apache   -g web ${STAGEDIR}/${PKG}${LOCALOPT}/apache/bin; \
+	  install -d -m 2775 -o apache   -g web ${STAGEDIR}/${PKG}${LOCALOPT}/apache/logs; \
+	  install -d -m 2555 -o apache   -g web ${STAGEDIR}/${PKG}${LOCALOPT}/apache/conf; \
+	  install -d -m 2555 -o apache   -g web ${STAGEDIR}/${PKG}${LOCALOPT}/apache/conf/includes; \
+	  install -d -m 2550 -o apache   -g web ${STAGEDIR}/${PKG}${LOCALOPT}/apache/conf/ssl.key; \
+	  install -d -m 2555 -o apache   -g web ${STAGEDIR}/${PKG}${LOCALOPT}/apache/conf/ssl.crt; \
+	  install -d -m 2555 -o apache   -g web ${STAGEDIR}/${PKG}${LOCALOPT}/apache/conf/ssl.csr; \
+	  ln -s ${STAGEDIR}/${PKG} vendor; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  umask 002; \
+	  export OBJECT_MODE=${BITS}; \
+	  cd source/${NAME}-${VER}; \
+	  make DESTDIR=${STAGEDIR}/${PKG} install 2>&1 | tee ${PWD}/stage.log; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  sed -i 's/^LoadModule/#LoadModule/' ${STAGEDIR}/${PKG}${LOCALOPT}/apache/${VER}/conf/httpd.conf; \
+	  sed -i 's/^User daemon/User apache/' ${STAGEDIR}/${PKG}${LOCALOPT}/apache/${VER}/conf/httpd.conf; \
+	  sed -i 's/^Group daemon/Group web/' ${STAGEDIR}/${PKG}${LOCALOPT}/apache/${VER}/conf/httpd.conf; \
+	  rm -rf ${STAGEDIR}/${PKG}${LOCALOPT}/apache/${VER}/man; \
+	  rm -rf ${STAGEDIR}/${PKG}${LOCALOPT}/apache/${VER}/manual; \
+	"
+
+#
+# Get zipped tar-ball from the author
+#
+
+downloads:
+	
+	--rm -f ../downloads/${NAME}*.tar.gz
+	cd ../downloads; \
+	wget ${SOURCEURL}/${NAME}-${VER}.tar.gz
+

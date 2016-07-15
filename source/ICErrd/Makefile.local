@@ -1,0 +1,76 @@
+#
+# File: ICErrd/Makefile.local
+#
+# Note: requires the following long list of packages
+# 
+#     glib-2.0   --  ftp://ftp.gtk.org/pub/glib/2.28/
+#     cairo-png  --  http://cairographics.org/releases/
+#     cairo-svg  --  http://cairographics.org/releases/
+#     cairo-pdf  --  http://cairographics.org/releases/
+#     cairo-ps   --  http://cairographics.org/releases/
+#     pangocairo --  http://ftp.gnome.org/pub/GNOME/sources/pango/1.28
+#
+#
+#
+# --------------------------------------------------------------------------
+# $Id: Makefile.local 4 2012-11-15 21:43:41Z svwebadmin $
+# --------------------------------------------------------------------------
+
+#
+# Build software
+#
+
+software: chk veryclean
+	
+	mkdir ${PWD}/source; cd ${PWD}/source; \
+	gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf -
+	cd ${PWD}/source/${NAME}-${VER}; \
+	export PKG_CONFIG_PATH=${LOCALOPT}/local/lib${BITS}/pkgconfig; \
+	./configure \
+	  CPPFLAGS="-I${LOCALOPT}/local/include/libxml2 ${CPPFLAGS}" \
+	  --prefix=${LOCALOPT}/local \
+	  --libdir=${LOCALOPT}/local/lib${BITS} \
+	; install -m 666 ${PWD}/source/${NAME}-${VER}/config.log ${PWD} \
+	; install -m 666 ${PWD}/source/${NAME}-${VER}/README ${PWD} \
+	; make
+
+#
+# Stage software
+#
+
+stage: chk
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -f vendor; \
+	  rm -Rf ${STAGEDIR}/${PKG}; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  install -d -m 775 -o root -g webadmin ${STAGEDIR}/${PKG}; \
+	  install -d -m 2775 -o root -g webadmin ${STAGEDIR}/${PKG}${LOCALOPT; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/bin; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/include; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/lib${BITS}; \
+	  ln -s ${STAGEDIR}/${PKG} vendor; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}/source/${NAME}-${VER}; \
+	  umask 002; \
+	  export OBJECT_MODE=${BITS}; \
+	  make DESTDIR=${STAGEDIR}/${PKG} install; \
+	"
+
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -rf ${STAGEDIR}/${PKG}${LOCALOPT}/local/share; \
+	  rm -f /tmp/stage.sed; \
+	"
+#
+# Get zipped tar-balls from the author(s)
+#
+
+downloads:
+	
+	cd ../downloads; \
+	rm -f ${NAME}-${VER}.tar.gz; \
+	wget ${SOURCEURL}/${NAME}-${VER}.tar.gz

@@ -1,0 +1,44 @@
+#
+# NAME
+#
+#   ICEdb/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for the ICEdb directory
+#
+# NOTES
+#
+#   blah
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+PKG=ICEdb
+NAME=db
+  VERSION=6.2.23.NC
+# VERSION=6.1.29.NC
+# VERSION=5.3.28.NC
+VENDOR=Crystal Integrators
+HOTLINE="none"
+EMAIL="admin@crystalintegrators.com"
+CATEGORY="application"
+BASEDIR=/
+CLASSES=vendor
+#
+# non-standard ICE variables
+# used in the package build
+#
+LOCALOPT=/opt
+HTTP_USER=rswanson%40me.com
+HTTP_PASS=Th1spa55
+SOURCEURL=https://download.oracle.com/otn/berkeley-db
+

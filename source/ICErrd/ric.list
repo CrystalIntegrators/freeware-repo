@@ -1,0 +1,653 @@
+VERSION=1.4.9,REV=15Jul2015
+export PWD="`pwd`"
+if [ `whoami` == "root" ]; then \
+	  echo; \
+	  echo "  Don't run this is \"root\", knucklehead !!!" ;\
+	  echo;\
+	  exit 1; \
+	fi
+if test ! "ICErrd" ; \
+	then \
+	    echo "\n\n\tPKG variable not set\n" ;\
+	    exit 1 ; \
+	fi
+sudo /bin/bash -c "rm -Rf /webapp/installs/develop/source/ICErrd/\/webapp\/installs\/develop\/source\/ICErrd/source"
+mkdir /webapp/installs/develop/source/ICErrd/source; cd /webapp/installs/develop/source/ICErrd/source; \
+	gzip -dc ../../downloads/rrdtool-1.4.9.tar.gz | tar xvf -
+rrdtool-1.4.9/
+rrdtool-1.4.9/bindings/
+rrdtool-1.4.9/bindings/lua/
+rrdtool-1.4.9/bindings/lua/test.lua.bottom
+rrdtool-1.4.9/bindings/lua/rrdlua.c
+rrdtool-1.4.9/bindings/lua/README
+rrdtool-1.4.9/bindings/lua/Makefile.am
+rrdtool-1.4.9/bindings/lua/Makefile.in
+rrdtool-1.4.9/bindings/lua/compat-5.1r5/
+rrdtool-1.4.9/bindings/lua/compat-5.1r5/compat-5.1.lua
+rrdtool-1.4.9/bindings/lua/compat-5.1r5/compat-5.1.h
+rrdtool-1.4.9/bindings/lua/compat-5.1r5/compat-5.1.c
+rrdtool-1.4.9/bindings/tcl/
+rrdtool-1.4.9/bindings/tcl/tclrrd.c
+rrdtool-1.4.9/bindings/tcl/README
+rrdtool-1.4.9/bindings/tcl/ifOctets.tcl.in
+rrdtool-1.4.9/bindings/tcl/Makefile.am
+rrdtool-1.4.9/bindings/tcl/Makefile.in
+rrdtool-1.4.9/bindings/Makefile.am
+rrdtool-1.4.9/bindings/Makefile.in
+rrdtool-1.4.9/bindings/ruby/
+rrdtool-1.4.9/bindings/ruby/test.rb
+rrdtool-1.4.9/bindings/ruby/main.c
+rrdtool-1.4.9/bindings/ruby/extconf.rb
+rrdtool-1.4.9/bindings/ruby/README
+rrdtool-1.4.9/bindings/ruby/CHANGES
+rrdtool-1.4.9/bindings/python/
+rrdtool-1.4.9/bindings/python/setup.py
+rrdtool-1.4.9/bindings/python/rrdtoolmodule.c
+rrdtool-1.4.9/bindings/python/README
+rrdtool-1.4.9/bindings/python/COPYING
+rrdtool-1.4.9/bindings/python/AUTHORS
+rrdtool-1.4.9/bindings/python/ACKNOWLEDGEMENT
+rrdtool-1.4.9/bindings/perl-shared/
+rrdtool-1.4.9/bindings/perl-shared/RRDs.xs
+rrdtool-1.4.9/bindings/perl-shared/RRDs.pm
+rrdtool-1.4.9/bindings/perl-shared/Makefile.PL
+rrdtool-1.4.9/bindings/perl-shared/README
+rrdtool-1.4.9/bindings/perl-shared/MANIFEST
+rrdtool-1.4.9/bindings/perl-shared/ntmake-build
+rrdtool-1.4.9/bindings/perl-shared/t/
+rrdtool-1.4.9/bindings/perl-shared/t/base.t
+rrdtool-1.4.9/bindings/perl-piped/
+rrdtool-1.4.9/bindings/perl-piped/RRDp.pm
+rrdtool-1.4.9/bindings/perl-piped/Makefile.PL
+rrdtool-1.4.9/bindings/perl-piped/README
+rrdtool-1.4.9/bindings/perl-piped/MANIFEST
+rrdtool-1.4.9/bindings/perl-piped/t/
+rrdtool-1.4.9/bindings/perl-piped/t/base.t
+rrdtool-1.4.9/doc/
+rrdtool-1.4.9/doc/rrdlua.pod
+rrdtool-1.4.9/doc/rrdgraph_libdbi.pod
+rrdtool-1.4.9/doc/rrdtool-xport.dtd
+rrdtool-1.4.9/doc/rrdtool-dump.dtd
+rrdtool-1.4.9/doc/librrd.txt
+rrdtool-1.4.9/doc/rrdtutorial.txt
+rrdtool-1.4.9/doc/rrdresize.txt
+rrdtool-1.4.9/doc/rrdgraph_data.txt
+rrdtool-1.4.9/doc/rrdcreate.txt
+rrdtool-1.4.9/doc/rrdlastupdate.txt
+rrdtool-1.4.9/doc/rrdlast.txt
+rrdtool-1.4.9/doc/rrdgraph.txt
+rrdtool-1.4.9/doc/rrdcgi.txt
+rrdtool-1.4.9/doc/rrdflushcached.txt
+rrdtool-1.4.9/doc/rrdbuild.txt
+rrdtool-1.4.9/doc/rrdtune.txt
+rrdtool-1.4.9/doc/rrdinfo.txt
+rrdtool-1.4.9/doc/rrd-beginners.txt
+rrdtool-1.4.9/doc/rrdcached.txt
+rrdtool-1.4.9/doc/rrdtool.txt
+rrdtool-1.4.9/doc/rrdgraph_rpn.txt
+rrdtool-1.4.9/doc/rrdfirst.txt
+rrdtool-1.4.9/doc/rpntutorial.txt
+rrdtool-1.4.9/doc/rrdxport.txt
+rrdtool-1.4.9/doc/rrdthreads.txt
+rrdtool-1.4.9/doc/rrdgraph_graph.txt
+rrdtool-1.4.9/doc/rrdfetch.txt
+rrdtool-1.4.9/doc/cdeftutorial.txt
+rrdtool-1.4.9/doc/rrdupdate.txt
+rrdtool-1.4.9/doc/rrdrestore.txt
+rrdtool-1.4.9/doc/rrdgraph_examples.txt
+rrdtool-1.4.9/doc/rrddump.txt
+rrdtool-1.4.9/doc/bin_dec_hex.txt
+rrdtool-1.4.9/doc/librrd.3
+rrdtool-1.4.9/doc/rrdtutorial.1
+rrdtool-1.4.9/doc/rrdresize.1
+rrdtool-1.4.9/doc/rrdgraph_data.1
+rrdtool-1.4.9/doc/rrdcreate.1
+rrdtool-1.4.9/doc/rrdlastupdate.1
+rrdtool-1.4.9/doc/rrdlast.1
+rrdtool-1.4.9/doc/rrdgraph.1
+rrdtool-1.4.9/doc/rrdcgi.1
+rrdtool-1.4.9/doc/rrdflushcached.1
+rrdtool-1.4.9/doc/rrdbuild.1
+rrdtool-1.4.9/doc/rrdtune.1
+rrdtool-1.4.9/doc/rrdinfo.1
+rrdtool-1.4.9/doc/rrd-beginners.1
+rrdtool-1.4.9/doc/rrdcached.1
+rrdtool-1.4.9/doc/rrdtool.1
+rrdtool-1.4.9/doc/rrdgraph_rpn.1
+rrdtool-1.4.9/doc/rrdfirst.1
+rrdtool-1.4.9/doc/rpntutorial.1
+rrdtool-1.4.9/doc/rrdxport.1
+rrdtool-1.4.9/doc/rrdthreads.1
+rrdtool-1.4.9/doc/rrdgraph_graph.1
+rrdtool-1.4.9/doc/rrdfetch.1
+rrdtool-1.4.9/doc/cdeftutorial.1
+rrdtool-1.4.9/doc/rrdupdate.1
+rrdtool-1.4.9/doc/rrdrestore.1
+rrdtool-1.4.9/doc/rrdgraph_examples.1
+rrdtool-1.4.9/doc/rrddump.1
+rrdtool-1.4.9/doc/bin_dec_hex.1
+rrdtool-1.4.9/doc/RRDp.html
+rrdtool-1.4.9/doc/RRDs.html
+rrdtool-1.4.9/doc/librrd.html
+rrdtool-1.4.9/doc/rrdtutorial.html
+rrdtool-1.4.9/doc/rrdresize.html
+rrdtool-1.4.9/doc/rrdgraph_data.html
+rrdtool-1.4.9/doc/rrdcreate.html
+rrdtool-1.4.9/doc/rrdlastupdate.html
+rrdtool-1.4.9/doc/rrdlast.html
+rrdtool-1.4.9/doc/rrdgraph.html
+rrdtool-1.4.9/doc/rrdcgi.html
+rrdtool-1.4.9/doc/rrdflushcached.html
+rrdtool-1.4.9/doc/rrdbuild.html
+rrdtool-1.4.9/doc/rrdtune.html
+rrdtool-1.4.9/doc/rrdinfo.html
+rrdtool-1.4.9/doc/rrd-beginners.html
+rrdtool-1.4.9/doc/rrdcached.html
+rrdtool-1.4.9/doc/rrdtool.html
+rrdtool-1.4.9/doc/rrdgraph_rpn.html
+rrdtool-1.4.9/doc/rrdfirst.html
+rrdtool-1.4.9/doc/rpntutorial.html
+rrdtool-1.4.9/doc/rrdxport.html
+rrdtool-1.4.9/doc/rrdthreads.html
+rrdtool-1.4.9/doc/rrdgraph_graph.html
+rrdtool-1.4.9/doc/rrdfetch.html
+rrdtool-1.4.9/doc/cdeftutorial.html
+rrdtool-1.4.9/doc/rrdupdate.html
+rrdtool-1.4.9/doc/rrdrestore.html
+rrdtool-1.4.9/doc/rrdgraph_examples.html
+rrdtool-1.4.9/doc/rrddump.html
+rrdtool-1.4.9/doc/bin_dec_hex.html
+rrdtool-1.4.9/doc/librrd.pod
+rrdtool-1.4.9/doc/rrdtutorial.pod
+rrdtool-1.4.9/doc/rrdresize.pod
+rrdtool-1.4.9/doc/rrdgraph_data.pod
+rrdtool-1.4.9/doc/rrdcreate.pod
+rrdtool-1.4.9/doc/rrdlastupdate.pod
+rrdtool-1.4.9/doc/rrdlast.pod
+rrdtool-1.4.9/doc/rrdgraph.pod
+rrdtool-1.4.9/doc/rrdcgi.pod
+rrdtool-1.4.9/doc/rrdflushcached.pod
+rrdtool-1.4.9/doc/rrdbuild.pod
+rrdtool-1.4.9/doc/rrdtune.pod
+rrdtool-1.4.9/doc/rrdinfo.pod
+rrdtool-1.4.9/doc/rrd-beginners.pod
+rrdtool-1.4.9/doc/rrdcached.pod
+rrdtool-1.4.9/doc/rrdtool.pod
+rrdtool-1.4.9/doc/rrdgraph_rpn.pod
+rrdtool-1.4.9/doc/rrdfirst.pod
+rrdtool-1.4.9/doc/rpntutorial.pod
+rrdtool-1.4.9/doc/rrdxport.pod
+rrdtool-1.4.9/doc/rrdthreads.pod
+rrdtool-1.4.9/doc/rrdgraph_graph.pod
+rrdtool-1.4.9/doc/rrdfetch.pod
+rrdtool-1.4.9/doc/cdeftutorial.pod
+rrdtool-1.4.9/doc/rrdupdate.pod
+rrdtool-1.4.9/doc/rrdrestore.pod
+rrdtool-1.4.9/doc/rrdgraph_examples.pod
+rrdtool-1.4.9/doc/rrddump.pod
+rrdtool-1.4.9/doc/bin_dec_hex.pod
+rrdtool-1.4.9/doc/Makefile.am
+rrdtool-1.4.9/doc/Makefile.in
+rrdtool-1.4.9/examples/
+rrdtool-1.4.9/examples/rrdcached/
+rrdtool-1.4.9/examples/rrdcached/rrdcached-size.pl
+rrdtool-1.4.9/examples/rrdcached/RRDCached.pm
+rrdtool-1.4.9/examples/rrdcached/Makefile.am
+rrdtool-1.4.9/examples/rrdcached/Makefile.in
+rrdtool-1.4.9/examples/cgi-demo.cgi.in
+rrdtool-1.4.9/examples/perftest.pl.in
+rrdtool-1.4.9/examples/4charts.pl.in
+rrdtool-1.4.9/examples/minmax.pl.in
+rrdtool-1.4.9/examples/bigtops.pl.in
+rrdtool-1.4.9/examples/stripes.pl.in
+rrdtool-1.4.9/examples/piped-demo.pl.in
+rrdtool-1.4.9/examples/shared-demo.pl.in
+rrdtool-1.4.9/examples/Makefile.am
+rrdtool-1.4.9/examples/Makefile.in
+rrdtool-1.4.9/depcomp
+rrdtool-1.4.9/src/
+rrdtool-1.4.9/src/plbasename.h
+rrdtool-1.4.9/src/plbasename.c
+rrdtool-1.4.9/src/get_ver.awk
+rrdtool-1.4.9/src/rrd_thread_safe_nt.c
+rrdtool-1.4.9/src/win32comp.c
+rrdtool-1.4.9/src/strftime.h
+rrdtool-1.4.9/src/strftime.c
+rrdtool-1.4.9/src/rrdupdate.c
+rrdtool-1.4.9/src/rrd_tool.c
+rrdtool-1.4.9/src/rrd_cgi.c
+rrdtool-1.4.9/src/rrd_daemon.c
+rrdtool-1.4.9/src/rrd_not_thread_safe.c
+rrdtool-1.4.9/src/rrd_thread_safe.c
+rrdtool-1.4.9/src/rrd_getopt1.c
+rrdtool-1.4.9/src/rrd_getopt.c
+rrdtool-1.4.9/src/rrd_update.c
+rrdtool-1.4.9/src/rrd_utils.c
+rrdtool-1.4.9/src/rrd_rpncalc.c
+rrdtool-1.4.9/src/rrd_nan_inf.c
+rrdtool-1.4.9/src/rrd_client.c
+rrdtool-1.4.9/src/rrd_open.c
+rrdtool-1.4.9/src/rrd_error.c
+rrdtool-1.4.9/src/rrd_info.c
+rrdtool-1.4.9/src/rrd_format.c
+rrdtool-1.4.9/src/rrd_diff.c
+rrdtool-1.4.9/src/rrd_hw_update.c
+rrdtool-1.4.9/src/rrd_hw_math.c
+rrdtool-1.4.9/src/rrd_hw.c
+rrdtool-1.4.9/src/rrd_parsetime.c
+rrdtool-1.4.9/src/hash_32.c
+rrdtool-1.4.9/src/rrd_create.c
+rrdtool-1.4.9/src/rrd_fetch_libdbi.c
+rrdtool-1.4.9/src/pngsize.c
+rrdtool-1.4.9/src/rrd_gfx.c
+rrdtool-1.4.9/src/rrd_xport.c
+rrdtool-1.4.9/src/rrd_graph_helper.c
+rrdtool-1.4.9/src/rrd_graph.c
+rrdtool-1.4.9/src/rrd_tune.c
+rrdtool-1.4.9/src/rrd_resize.c
+rrdtool-1.4.9/src/rrd_fetch.c
+rrdtool-1.4.9/src/rrd_flushcached.c
+rrdtool-1.4.9/src/rrd_dump.c
+rrdtool-1.4.9/src/rrd_restore.c
+rrdtool-1.4.9/src/rrd_first.c
+rrdtool-1.4.9/src/rrd_lastupdate.c
+rrdtool-1.4.9/src/rrd_last.c
+rrdtool-1.4.9/src/rrd_version.c
+rrdtool-1.4.9/src/rrd_is_thread_safe.h
+rrdtool-1.4.9/src/rrd_graph.h
+rrdtool-1.4.9/src/fnv.h
+rrdtool-1.4.9/src/rrd_hw_update.h
+rrdtool-1.4.9/src/rrd_hw_math.h
+rrdtool-1.4.9/src/rrd_hw.h
+rrdtool-1.4.9/src/rrd_rpncalc.h
+rrdtool-1.4.9/src/rrd_xport.h
+rrdtool-1.4.9/src/rrd_tool.h
+rrdtool-1.4.9/src/rrd_i18n.h
+rrdtool-1.4.9/src/rrd_config_bottom.h
+rrdtool-1.4.9/src/rrd_parsetime.h
+rrdtool-1.4.9/src/rrd_getopt.h
+rrdtool-1.4.9/src/gettext.h
+rrdtool-1.4.9/src/unused.h
+rrdtool-1.4.9/src/rrd_client.h
+rrdtool-1.4.9/src/rrd_format.h
+rrdtool-1.4.9/src/rrd.h
+rrdtool-1.4.9/src/librrd.pc.in
+rrdtool-1.4.9/src/librrd.sym.in.in
+rrdtool-1.4.9/src/Makefile.am
+rrdtool-1.4.9/src/Makefile.in
+rrdtool-1.4.9/po/
+rrdtool-1.4.9/po/LINGUAS
+rrdtool-1.4.9/po/ChangeLog
+rrdtool-1.4.9/po/stamp-po
+rrdtool-1.4.9/po/rrdtool.pot
+rrdtool-1.4.9/po/POTFILES.in
+rrdtool-1.4.9/po/Makevars
+rrdtool-1.4.9/po/Rules-quot
+rrdtool-1.4.9/po/insert-header.sin
+rrdtool-1.4.9/po/en@boldquot.header
+rrdtool-1.4.9/po/en@quot.header
+rrdtool-1.4.9/po/boldquot.sed
+rrdtool-1.4.9/po/quot.sed
+rrdtool-1.4.9/po/remove-potcdate.sin
+rrdtool-1.4.9/po/Makefile.in.in
+rrdtool-1.4.9/libtool
+rrdtool-1.4.9/autogen.sh
+rrdtool-1.4.9/favicon.ico
+rrdtool-1.4.9/rrdtool.spec
+rrdtool-1.4.9/bootstrap.sh
+rrdtool-1.4.9/VERSION
+rrdtool-1.4.9/THREADS
+rrdtool-1.4.9/CONTRIBUTORS
+rrdtool-1.4.9/WIN32-BUILD-TIPS.txt
+rrdtool-1.4.9/CHANGES
+rrdtool-1.4.9/COPYRIGHT
+rrdtool-1.4.9/ltmain.sh
+rrdtool-1.4.9/missing
+rrdtool-1.4.9/install-sh
+rrdtool-1.4.9/config.sub
+rrdtool-1.4.9/config.rpath
+rrdtool-1.4.9/config.guess
+rrdtool-1.4.9/compile
+rrdtool-1.4.9/TODO
+rrdtool-1.4.9/README
+rrdtool-1.4.9/NEWS
+rrdtool-1.4.9/COPYING
+rrdtool-1.4.9/ABOUT-NLS
+rrdtool-1.4.9/rrd_config.h.in
+rrdtool-1.4.9/aclocal.m4
+rrdtool-1.4.9/configure.ac
+rrdtool-1.4.9/configure
+rrdtool-1.4.9/Makefile.am
+rrdtool-1.4.9/Makefile.in
+rrdtool-1.4.9/win32/
+rrdtool-1.4.9/win32/rrdupdate.sln
+rrdtool-1.4.9/win32/rrdtool.sln
+rrdtool-1.4.9/win32/rrd.sln
+rrdtool-1.4.9/win32/README
+rrdtool-1.4.9/win32/rrdupdate.vcproj
+rrdtool-1.4.9/win32/rrdtool.vcproj
+rrdtool-1.4.9/win32/rrdlib.vcproj
+rrdtool-1.4.9/win32/config.h
+rrdtool-1.4.9/win32/Makefile
+rrdtool-1.4.9/netware/
+rrdtool-1.4.9/netware/Makefile
+rrdtool-1.4.9/m4/
+rrdtool-1.4.9/m4/progtest.m4
+rrdtool-1.4.9/m4/po.m4
+rrdtool-1.4.9/m4/nls.m4
+rrdtool-1.4.9/m4/lt~obsolete.m4
+rrdtool-1.4.9/m4/ltversion.m4
+rrdtool-1.4.9/m4/ltsugar.m4
+rrdtool-1.4.9/m4/ltoptions.m4
+rrdtool-1.4.9/m4/libtool.m4
+rrdtool-1.4.9/m4/lib-prefix.m4
+rrdtool-1.4.9/m4/lib-link.m4
+rrdtool-1.4.9/m4/lib-ld.m4
+rrdtool-1.4.9/m4/intlmacosx.m4
+rrdtool-1.4.9/m4/iconv.m4
+rrdtool-1.4.9/m4/gettext.m4
+rrdtool-1.4.9/m4/acinclude.m4
+rrdtool-1.4.9/etc/
+rrdtool-1.4.9/etc/rrdcached-init
+rrdtool-1.4.9/etc/rrdcached-default
+cd /webapp/installs/develop/source/ICErrd/source/rrdtool-1.4.9; \
+	./configure \
+	  CPPFLAGS="-I/opt/local/include/libxml2 -I/opt/local/include" \
+	  --prefix=/opt/local \
+	  --libdir=/opt/local/lib64 \
+	; make
+checking build system type... x86_64-unknown-linux-gnu
+checking host system type... x86_64-unknown-linux-gnu
+checking target system type... x86_64-unknown-linux-gnu
+checking for gcc... /usr/bin/gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether /usr/bin/gcc accepts -g... yes
+checking for /usr/bin/gcc option to accept ISO C89... none needed
+checking whether /usr/bin/gcc understands -c and -o together... yes
+checking how to run the C preprocessor... /usr/bin/gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking for style of include used by make... GNU
+checking whether make supports nested variables... yes
+checking dependency style of /usr/bin/gcc... gcc3
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking whether make supports nested variables... (cached) yes
+
+[1mAudit Compilation Environment[m
+checking how to run the C preprocessor... /usr/bin/gcc -E
+checking for gcc... (cached) /usr/bin/gcc
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether /usr/bin/gcc accepts -g... (cached) yes
+checking for /usr/bin/gcc option to accept ISO C89... (cached) none needed
+checking whether /usr/bin/gcc understands -c and -o together... (cached) yes
+checking how to print strings... printf
+checking for a sed that does not truncate output... /bin/sed
+checking for fgrep... /bin/grep -F
+checking for ld used by /usr/bin/gcc... /usr/bin/ld
+checking if the linker (/usr/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+checking the name lister (/usr/bin/nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1966080
+checking whether the shell understands some XSI constructs... yes
+checking whether the shell understands "+="... yes
+checking how to convert x86_64-unknown-linux-gnu file names to x86_64-unknown-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-unknown-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/bin/ld option to reload object files... -r
+checking for objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for dlltool... no
+checking how to associate runtime and link libraries... printf %s\n
+checking for ar... ar
+checking for archiver @FILE support... @
+checking for strip... strip
+checking for ranlib... ranlib
+checking command to parse /usr/bin/nm -B output from /usr/bin/gcc object... ok
+checking for sysroot... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if /usr/bin/gcc supports -fno-rtti -fno-exceptions... no
+checking for /usr/bin/gcc option to produce PIC... -fPIC -DPIC
+checking if /usr/bin/gcc PIC flag -fPIC -DPIC works... yes
+checking if /usr/bin/gcc static flag -static works... no
+checking if /usr/bin/gcc supports -c -o file.o... yes
+checking if /usr/bin/gcc supports -c -o file.o... (cached) yes
+checking whether the /usr/bin/gcc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... yes
+checking if gcc likes the -Werror flag... yes
+checking if gcc likes the -fno-strict-aliasing flag... yes
+checking if gcc likes the -Wall flag... yes
+checking if gcc likes the -std=gnu99 flag... yes
+checking if gcc likes the -pedantic flag... yes
+checking if gcc likes the -Wundef flag... yes
+checking if gcc likes the -Wshadow flag... yes
+checking if gcc likes the -Wpointer-arith flag... yes
+checking if gcc likes the -Wcast-align flag... yes
+checking if gcc likes the -Wmissing-prototypes flag... yes
+checking if gcc likes the -Wmissing-declarations flag... yes
+checking if gcc likes the -Wnested-externs flag... yes
+checking if gcc likes the -Winline flag... yes
+checking if gcc likes the -Wold-style-definition flag... yes
+checking if gcc likes the -W flag... yes
+
+[1mChecking for Header Files[m
+checking for ANSI C header files... (cached) yes
+checking for dirent.h that defines DIR... yes
+checking for library containing opendir... none required
+checking langinfo.h usability... yes
+checking langinfo.h presence... yes
+checking for langinfo.h... yes
+checking for stdint.h... (cached) yes
+checking for inttypes.h... (cached) yes
+checking libgen.h usability... yes
+checking libgen.h presence... yes
+checking for libgen.h... yes
+checking features.h usability... yes
+checking features.h presence... yes
+checking for features.h... yes
+checking for sys/stat.h... (cached) yes
+checking for sys/types.h... (cached) yes
+checking fcntl.h usability... yes
+checking fcntl.h presence... yes
+checking for fcntl.h... yes
+checking fp_class.h usability... no
+checking fp_class.h presence... no
+checking for fp_class.h... no
+checking malloc.h usability... yes
+checking malloc.h presence... yes
+checking for malloc.h... yes
+checking for unistd.h... (cached) yes
+checking ieeefp.h usability... no
+checking ieeefp.h presence... no
+checking for ieeefp.h... no
+checking math.h usability... yes
+checking math.h presence... yes
+checking for math.h... yes
+checking sys/times.h usability... yes
+checking sys/times.h presence... yes
+checking for sys/times.h... yes
+checking sys/param.h usability... yes
+checking sys/param.h presence... yes
+checking for sys/param.h... yes
+checking sys/resource.h usability... yes
+checking sys/resource.h presence... yes
+checking for sys/resource.h... yes
+checking signal.h usability... yes
+checking signal.h presence... yes
+checking for signal.h... yes
+checking float.h usability... yes
+checking float.h presence... yes
+checking for float.h... yes
+checking stdio.h usability... yes
+checking stdio.h presence... yes
+checking for stdio.h... yes
+checking for stdlib.h... (cached) yes
+checking errno.h usability... yes
+checking errno.h presence... yes
+checking for errno.h... yes
+checking for string.h... (cached) yes
+checking ctype.h usability... yes
+checking ctype.h presence... yes
+checking for ctype.h... yes
+checking for an ANSI C-conforming const... yes
+checking whether time.h and sys/time.h may both be included... yes
+checking whether struct tm is in sys/time.h or time.h... time.h
+
+[1mTest Library Functions[m
+checking for acos... no
+checking for acos in -lm... yes
+checking for strftime... yes
+checking for vprintf... yes
+checking for _doprnt... no
+checking whether byte ordering is bigendian... no
+checking for nl_langinfo... yes
+checking for tzset... yes
+checking for round... yes
+checking for rint... yes
+checking for fsync... yes
+checking for mbstowcs... yes
+checking for opendir... yes
+checking for readdir... yes
+checking for chdir... yes
+checking for chroot... yes
+checking for getuid... yes
+checking for strerror... yes
+checking for snprintf... yes
+checking for vsnprintf... yes
+checking for vasprintf... yes
+checking for fpclass... no
+checking for class... no
+checking for fp_class... no
+checking for isnan... yes
+checking for memmove... yes
+checking for strchr... yes
+checking for mktime... yes
+checking for getrusage... yes
+checking for gettimeofday... yes
+checking whether strerror_r is declared... yes
+checking for strerror_r... yes
+checking whether strerror_r returns char *... yes
+
+[1mMap/Fadvis/Madvise checking[m
+checking for fdatasync... yes
+checking for fsync... (cached) yes
+checking for socket... yes
+checking for getaddrinfo... yes
+checking sys/mman.h usability... yes
+checking sys/mman.h presence... yes
+checking for sys/mman.h... yes
+checking for stdlib.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for sys/param.h... (cached) yes
+checking for getpagesize... yes
+checking for working mmap... yes
+checking for mmap... yes
+checking for munmap... yes
+checking for msync... yes
+checking whether madvise is declared... yes
+checking for madvise... yes
+checking whether posix_fadvise is declared... yes
+checking for posix_fadvise... yes
+checking for posix_fallocate... yes
+
+[1mLibintl Processing[m
+checking whether NLS is requested... yes
+checking for msgfmt... /usr/bin/msgfmt
+checking for gmsgfmt... /usr/bin/msgfmt
+checking for xgettext... /usr/bin/xgettext
+checking for msgmerge... /usr/bin/msgmerge
+checking for ld used by GCC... /usr/bin/ld -m elf_x86_64
+checking if the linker (/usr/bin/ld -m elf_x86_64) is GNU ld... yes
+checking for shared library run path origin... done
+checking for CFPreferencesCopyAppValue... no
+checking for CFLocaleCopyCurrent... no
+checking for GNU gettext in libc... yes
+checking whether to use NLS... yes
+checking where the gettext function comes from... libc
+
+[1mIEEE Math Checks[m
+checking for fpclassify... no
+checking for fpclassify with <math.h>... yes
+checking for isinf... yes
+checking whether isfinite is broken... no
+checking if IEEE math works out of the box... yes
+
+[1mResolve Portability Issues[m
+checking tm_gmtoff in struct tm... yes
+checking __tm_gmtoff in struct tm... no
+checking if msync with MS_ASYNC updates the files mtime... yes
+checking for _NL_TIME_WEEK_1STDAY... no
+checking for nl_langinfo(_NL_TIME_WEEK_1STDAY) with langinfo.h... yes
+checking for opterr... yes
+checking for getopt_long... yes
+checking if realloc can deal with NULL... yes
+checking if ctime_r need special care to act posixly correct... no
+checking for the pthreads library -lpthreads... no
+checking whether pthreads work without any flags... no
+checking whether pthreads work with -Kthread... no
+checking whether pthreads work with -kthread... no
+checking for the pthreads library -llthread... no
+checking whether pthreads work with -pthread... yes
+checking for joinable pthread attribute... PTHREAD_CREATE_JOINABLE
+checking if more special flags are required for pthreads... no
+checking for cc_r... /usr/bin/gcc
+checking do we need malloc/malloc.h... nope, works out of the box
+checking size of time_t... 8
+
+[1mFind 3rd-Party Libraries[m
+checking dbi/dbi.h usability... no
+checking dbi/dbi.h presence... no
+checking for dbi/dbi.h... no
+checking tcpd.h usability... no
+checking tcpd.h presence... no
+checking for tcpd.h... no
+checking for glib_check_version in -lglib-2.0... no
+checking for pkg-config... pkg-config
+checking for cairo_font_options_create in -lcairo... no
+checking for pkg-config... (cached) pkg-config
+checking for cairo_svg_surface_create in -lcairo... no
+checking for pkg-config... (cached) pkg-config
+checking for cairo_pdf_surface_create in -lcairo... no
+checking for pkg-config... (cached) pkg-config
+checking for cairo_ps_surface_create in -lcairo... no
+checking for pkg-config... (cached) pkg-config
+checking for pango_cairo_context_set_font_options in -lpangocairo-1.0... no
+checking for pkg-config... (cached) pkg-config
+checking for xmlParseFile in -lxml2... yes
+checking libxml/parser.h usability... yes
+checking libxml/parser.h presence... yes
+checking for libxml/parser.h... yes
+make[1]: Entering directory `/webapp/installs/develop/source/ICErrd/source/rrdtool-1.4.9'
+make[1]: Leaving directory `/webapp/installs/develop/source/ICErrd/source/rrdtool-1.4.9'

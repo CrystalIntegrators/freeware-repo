@@ -1,0 +1,41 @@
+#
+# NAME
+#
+#   ICEnrpe/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for the ICEnrpe package
+#
+# NOTES
+#
+#   blah
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+
+PKG=ICEnrpe
+NAME=nrpe
+VERSION=2.15
+VENDOR=Crystal Integrators
+HOTLINE=none
+EMAIL=support@crystalintegrators.com
+CATEGORY=application
+BASEDIR=/
+CLASSES=vendor
+
+#
+# non-standard ICE variables used in the package build
+#
+
+LOCALOPT=/webapp
+SOURCEURL=http://sourceforge.net/projects/nagios/files/${NAME}-2.x/

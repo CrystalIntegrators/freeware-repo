@@ -1,0 +1,59 @@
+#
+# File: ICEcidr/Makefile.local
+#
+# Note: none
+#
+# --------------------------------------------------------------------------
+# $Id: Makefile.local 4 2012-11-15 21:43:41Z svwebadmin $
+# --------------------------------------------------------------------------
+
+#
+# Build software
+#
+
+software: chk veryclean
+	
+	mkdir ${THISDIR}/source; cd ${THISDIR}/source; \
+	cd source; \
+	gzip -dc ../../downloads/${NAME}-${VER}.tgz | tar xvf -
+	cd source/${NAME}-${VER}; \
+	make 
+
+#
+# Stage software
+#
+
+stage: chk
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -f vendor; \
+	   m -Rf ${STAGEDIR}/${PKG}; \
+	"
+	 
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  install -d -m 775 -o root -g webadmin ${STAGEDIR}/${PKG}; \
+	  install -d -m 2775 -o root -g webadmin ${STAGEDIR}/${PKG}${LOCALOPT}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local; \
+	  ln -s ${STAGEDIR}/${PKG} vendor; \
+	"
+	 
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  umask 002; \
+	  export OBJECT_MODE=${BITS}; \
+	  cd source/${NAME}-${VER}; \
+	  make install PREFIX=${STAGEDIR}/${PKG}${LOCALOPT}/local; \
+	"
+	 
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -rf ${STAGEDIR}/${PKG}${LOCALOPT}/local/share; \
+	  rm -f /tmp/stage.sed; \
+	"
+
+#
+# Get zipped tar-balls from the author(s)
+#
+
+downloads:
+	cd ../downloads; \
+	rm -f ${NAME}-${VER}.tar.gz; \
+	wget ${SOURCEURL}/${NAME}-${VER}.tgz

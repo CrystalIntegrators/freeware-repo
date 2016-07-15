@@ -1,0 +1,206 @@
+DNX README File
+---------------
+
+DNX - Distributed Nagios eXecutor is a Nagios Event Broker (NEB) plug-in 
+module that distributes checks amongst several servers ("worker nodes") to 
+reduce load and check latency introduced by a large Nagios installation.
+
+Traditionally DNX has existed as two parts:
+
+   - The DNX Integrated Server NEB module (dnxServer.so) and
+   - The DNX Client (dnxClient) daemon.
+
+More recently the DNX Integrated Server has been split into two parts:
+
+   - The DNX Plugin NEB module (dnxPlugin.so) and
+   - The DNX Server (dnxServer) program.
+
+DNX Server
+----------
+
+Both dnxServer.so and dnxPlugin.so work like any other NEB modules; they're
+loaded into the same process address space as Nagios upon start up. 
+
+The newer dnxPlugin.so works the same, but offloads much of the work of the 
+DNX server to a child process (dnxServer) that the Plugin starts when it's 
+loaded by Nagios. 
+
+The problem with the traditional integrated approach is that the DNX server 
+starts several threads, which then reside and execute within the Nagios 
+process. But Nagios is a multi-process application, rather than a multi-
+threaded application, and fork and threads don't get along very well
+together in the same process.
+
+While the older integrated Server module still works it retains the inherent
+problems mentioned above. You may find intermittent hangs and memory pooling
+or loss. The Integrated Server is being phased out in favor of the dual-process 
+Plugin/Server model.
+
+DNX Client
+----------
+
+dnxClient resides on a separate host and sends requests to the thread started 
+by the DNX NEB module on the Nagios server ("head node") for checks to 
+perform and then returns the status data back to the module for Nagios' 
+interpretation and subsequent actions (alerts, notifications, etc).
+
+Management Interface
+--------------------
+
+DNX provides a simple management interface, which allows the administrator
+to perform management tasks against executing DNX clients and servers. The
+tool is called 'dnxstats' and is installed (by default) into the $(prefix)/bin
+directory on the DNX server (installed using install or install-server). 
+
+The dnxstats utility has a simple interface, which you can discover using 
+the --help command-line option:
+
+  $ /usr/local/nagios/bin/dnxstats --help
+  Usage: dnxstats [options]
+  Where [options] are:
+    -s <host>    specify target host name (default: localhost).
+    -p <port>    specify target port number (default: 12482).
+    -c <cmdstr>  send <cmdstr> to server. (Hint: Try sending "HELP".)
+    -v           print version and exit.
+    -h           print this help and exit.
+
+The functionality provided by dnxstats is really provided by the stats
+server (the DNX client, in this case). To find out the level of
+functionality supported by a given server, send the "HELP" command:
+
+dnxstats -s HOST -p PORT -c "COMMAND,stat_1,stat_2,stat_3,etc"
+
+Available Commands Are:
+ 
+   SHUTDOWN
+   RECONFIGURE
+   DEBUGTOGGLE
+   RESETSTATS
+   GETSTATS
+   GETCONFIG
+   GETVERSION
+   HELP	 
+
+You can track the following items.
+
+Client:
+
+   jobs_handled  - number of jobs completed successful or otherwise
+   jobs_ok       - number of successful jobs
+   jobs_failed   - number of unsuccessful jobs
+   th_created    - number of threads created
+   th_destroyed  - number of threads destroyed
+   th_exist      - number of threads currently in existence
+   th_active     - number of threads currently active
+   req_sent      - number of requests sent to DNX server
+   job_srcvd     - number of jobs received from DNX server
+   min_exec_tm   - minimum job execution time
+   avg_exec_tm   - average job execution time
+   max_exec_tm   - maximum job execution time
+   avg_th_exist  - average threads in existence
+   avg_th_active - average threads processing jobs
+   thread_tm     - total thread life time
+   job_tm        - total job processing time
+
+Server:
+
+   requests_received      - number of work requests from nodes received
+   requests_expired       - number of work requests expired without service
+   nodes_registered       - number of client nodes registered
+   dispatches_ok          - number of successful job dispatches
+   dispatches_failed      - number of failed job dispatches
+   jobs_handled           - number of jobs accepted by server
+   jobs_rejected_no_slots - number of jobs rejected due to no space in job list
+   jobs_rejected_no_nodes - number of jobs rejected due to no work requests
+   results_ok             - number of 'ok' (zero) results received from nodes
+   results_failed         - number of 'failed' (non-zero) results received
+   results_timed_out      - number of results never returned from nodes
+   post_results_ok        - number of results successfully posted to Nagios
+   post_results_failed    - number of results failed to post to Nagios
+
+The dnxstats utility is really a dumb client, sending text 
+specified by the user, and dumping raw response text to the console.
+
+Except for single-word commands, all command strings should be
+enclosed in double or single quotes, so that the shell interprets
+the entire command string (text following the -c option) as a single
+argument.
+
+
+Nagios Support
+--------------
+
+Currently, DNX has been tested with Nagios 2.7, 2.8, 2.9, 2.10, 2.11, 3.0
+through 3.2.0. As we continue to release new versions of DNX, we'll continue
+to enhance support for the latest Nagios versions.
+
+In past versions, the default DNX configuration was to build DNX source against
+Nagios 2.x header files and symbols. To build against Nagios 3.x, one had to 
+specify the --with-nagios3x option on the configure command line.
+
+Beginning with DNX version 0.20, the default configuration is to build 
+against Nagios 3.x header files and symbols. To build against Nagios 2.x
+one must now specify the --with-nagios2x option on the configure command line.
+
+If the Nagios log file indicates that a DNX NEB module didn't load because of
+a missing symbol (e.g., service_result_buffer, check_result_buffer_slots, 
+temp_path, check_result_info, move_check_result_to_queue, etc.) then you're
+probably not using the correct --with-nagiosXX option on the configure
+command line to build against your version of Nagios.
+
+
+Advanced Features
+-----------------
+
+Local Execution Only Checks
+
+You may have some check which must be run from one host only (firewall 
+issues, SAN connections, proprietary libraries, etc). To accomodate this, 
+you may flag certain checks to not be distributed. They will execute in
+the normal fashion as if DNX was not loaded. This could also be used to
+perform checks on the nagios server itself (check_load, check_nagios, etc). 
+This could be problematic in that it makes it harder to run these same checks
+on the worker nodes. We recommend the use of nrpe for all such checks (nagios
+engine server and worker nodes), if for no other reason than for simplicity. 
+The worker nodes will use nrpe to check the nagios engine server as well as 
+each other.
+
+Plug-in Propagation
+
+One concern with DNX is that the plugins will exist on different servers and 
+must all be identical. Thus, included with DNX is a simple perl script 
+(sync_plugins.pl) which runs like a plugin that dnxServer.so or dnxPlugin.so
+executes upon startup. This script provides a mechanism to ensure that all of
+your plugins exist on each of the worker nodes (this is important because you 
+can't be sure which node will actually perform the checks). The script uses 
+rsync to push all of the plugins in your plugin directory from the nagios 
+engine server (the plugin authority) to each worker node. For this to work 
+you must set up SSH key sharing (as the Nagios user) between your servers 
+for the nagios user so that this rsync will work without a password. Note 
+that this could be considered a security risk by some people/organizations. 
+If you do not like this mechanism, you may write your own sync plugin, or 
+disable DNX's interal ability to sync plugins and do so by your own devices.
+
+Also note that each worker node needs to be set up similarly, if not 
+identically to other worker nodes (any external libraries, perl modules, 
+paths, etc). And lastly, you should be aware that the rsync may clobber meta
+data of plugins on the first run, which you may want to fix manually. For 
+example, check_icmp needs to be run as root with the set uid bit, if 
+check_icmp is updated (or moved to the worker node for the first time) by 
+rsync, it will loose ownership by root. Once the plugin is in place with the 
+permissions correct, rsync will leave it alone, however.
+
+
+Additional Information
+----------------------
+
+For information on building, installation and configuration, please refer to
+the INSTALL file. 
+
+For the latest changes, please refer to the NEWS file.
+
+For detailed information on source changes between versions, please refer to 
+the ChangeLog file.
+
+Please see the COPYING file for details on the GNU General Public License, 
+under which this software is released.

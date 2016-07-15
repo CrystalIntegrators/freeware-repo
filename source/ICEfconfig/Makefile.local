@@ -1,0 +1,72 @@
+#
+# File: ICEconfig/Makefile.local
+#
+# Note: 
+#
+#   requires 
+#
+#   	libpng
+#   	pixman
+#   	freetype
+#
+# --------------------------------------------------------------------------
+# $Id: Makefile.local 4 2012-11-15 21:43:41Z svwebadmin $
+# --------------------------------------------------------------------------
+
+#
+# Build software
+#
+
+software: chk veryclean
+	
+	mkdir ${THISDIR}/source; cd ${THISDIR}/source; \
+	gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf -
+	cd source/${NAME}-${VER}; \
+	export PKG_CONFIG_PATH=${LOCALOPT}/local/lib${BITS}/pkgconfig; \
+	./configure \
+	  --prefix=${LOCALOPT}/local \
+	  --libdir=${LOCALOPT}/local/lib${BITS} \
+	  --sysconfdir=${LOCALOPT}/local/etc \
+	  --enable-libxml2 \
+	; install -m 666 ${PWD}/source/${NAME}-${VER}/configure.log ${PWD} \
+	; make 
+
+#
+# Stage software
+#
+
+
+stage: chk
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -f vendor; \
+	  rm -Rf ${STAGEDIR}/${PKG}; \
+	"
+	 
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  install -d -m 775 -o root -g webadmin ${STAGEDIR}/${PKG}; \
+	  install -d -m 2775 -o root -g webadmin ${STAGEDIR}/${PKG}${LOCALOPT}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/lib${BITS}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/include; \
+	  ln -s ${STAGEDIR}/${PKG} vendor; \
+	"
+	        
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  umask 002; \
+	  export OBJECT_MODE=${BITS}; \
+	  cd source/${NAME}-${VER}; \
+	  make install DESTDIR=${STAGEDIR}/${PKG}; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -rf vendor${LOCALOPT}/local/share; \
+
+#
+# Get zipped tar-balls from the author(s)
+#
+
+downloads:
+	cd ../downloads; \
+	rm -f ${NAME}-${VER}.tar.xz; \
+	wget ${SOURCEURL}/${NAME}-${VER}.tar.gz

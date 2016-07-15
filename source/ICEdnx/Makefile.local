@@ -1,0 +1,97 @@
+#
+# File: ICEdnx/Makefile.local
+#
+# Note: none
+#
+# --------------------------------------------------------------------------
+# $Id: Makefile.local 4 2012-11-15 21:43:41Z svwebadmin $
+# --------------------------------------------------------------------------
+
+#
+# Build software
+#
+
+software: chk veryclean
+	
+	mkdir ${THISDIR}/source; cd ${THISDIR}/source; \
+	gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf -
+	cd source/${NAME}-${VER}; \
+	export PKG_CONFIG_PATH=${LOCALOPT}/local/lib${BITS}/pkgconfig; \
+	./configure --help > ${PWD}/config.help; \
+	./configure \
+	  --prefix=${LOCALOPT}/local \
+	  --libdir=${LOCALOPT}/local/lib${BITS} \
+	  --sysconfdir=${LOCALOPT}/local/etc \
+	  --with-command-user=apache \
+	  --with-command-group=web \
+	  --with-nagios-user=apache \
+	  --with-nagios-group=web \
+	  --datadir=/webdata/${NAME} \
+	  --sbindir=/webdata/${NAME}/cgi-bin \
+	  --with-httpd-conf=${LOCALOPT}/apache/conf/includes \
+        ; install -m 666 ${PWD}/source/${NAME}-${VER}/config.log ${PWD} \
+        ; install -m 666 ${PWD}/source/${NAME}-${VER}/README ${PWD}/README.${NAME} \
+	; make all
+
+#
+# Stage software
+#
+
+stage: chk
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -f vendor; \
+	  rm -Rf ${STAGEDIR}/${PKG}; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  install -d -m 775 -o root -g webadmin ${STAGEDIR}/${PKG}; \
+	  install -d -m 2775 -o root -g webadmin ${STAGEDIR}/${PKG}${LOCALOPT}; \
+	  install -d -m 2755 -o root -g root ${STAGEDIR}/${PKG}/etc; \
+	  install -d -m 2755 -o root -g root ${STAGEDIR}/${PKG}/etc/rc.d \
+	  install -d -m 2755 -o root -g root ${STAGEDIR}/${PKG}/etc/rc.d/init.d \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/etc; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/etc/samples; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/lib${BITS}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/libexec; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/include; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/var; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/webdata/${NAME}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/webdata/${NAME}/cgi-bin; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/webdata/${NAME}/contexthelp; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/webdata/${NAME}/docs; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/webdata/${NAME}/images; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/webdata/${NAME}/includes; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/webdata/${NAME}/js; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/webdata/${NAME}/media; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/webdata/${NAME}/ssi; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/webdata/${NAME}/stylesheets; \
+	  ln -s ${STAGEDIR}/${PKG} vendor; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  umask 002; \
+	  export OBJECT_MODE=${BITS}; \
+	  cd source/${NAME}-${VER}; \
+	  make install DESTDIR=${STAGEDIR}/${PKG}; \
+	  make install-init DESTDIR=${STAGEDIR}/${PKG}; \
+	  make install-commandmode DESTDIR=${STAGEDIR}/${PKG}; \
+	  make install-config DESTDIR=${STAGEDIR}/${PKG}; \
+	  make install-webconf DESTDIR=${STAGEDIR}/${PKG}; \
+	  make install-classicui DESTDIR=${STAGEDIR}/${PKG}; \
+	  mv ${STAGEDIR}/${PKG}/etc/rc.d/init.d/nagios ${STAGEDIR}/${PKG}/etc/rc.d/init.d/nagios.sample; \
+	  mv ${STAGEDIR}/${PKG}${LOCALOPT}/local/etc/*.cfg  ${STAGEDIR}/${PKG}${LOCALOPT}/local/etc/samples; \
+	  mv ${STAGEDIR}/${PKG}${LOCALOPT}/local/etc/objects  ${STAGEDIR}/${PKG}${LOCALOPT}/local/etc/samples; \
+	"
+#	  make install-exfoliation DESTDIR=${STAGEDIR}/${PKG}; \
+ 
+#
+# Get zipped tar-balls from the author(s)
+#
+
+downloads:
+	cd ../downloads; \
+	rm -f ${NAME}-${VER}.tar.xz; \
+	wget ${SOURCEURL}/${NAME}-${VER}/${NAME}-${VER}.tar.gz/download
+

@@ -1,0 +1,72 @@
+#
+# File: ICEnspr/Makefile.local
+#
+# Note: none
+#
+# --------------------------------------------------------------------------
+# $Id: Makefile.local 4 2012-11-15 21:43:41Z svwebadmin $
+# --------------------------------------------------------------------------
+
+#
+# Build software
+#
+
+software: chk veryclean
+	
+	mkdir ${THISDIR}/source; cd ${THISDIR}/source; \
+	gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf -
+	cd source; \
+	gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf -
+	cd source/${NAME}-${VER}/mozilla/nsprpub; \
+	./configure \
+	--prefix=${LOCALOPT}/local \
+	--libdir=${LOCALOPT}/local/lib${BITS} \
+	; install -m 666 ${PWD}/source/${NAME}-${VER}/configure.log ${PWD} \
+	; make 
+
+#
+# Stage software
+#
+
+stage: chk
+	
+	--rm -f vendor
+	--rm -Rf ${STAGEDIR}/${PKG}
+	#
+	install -d -m 775 -o root -g webadmin ${STAGEDIR}/${PKG}
+	install -d -m 2775 -o root -g webadmin ${STAGEDIR}/${PKG}${LOCALOPT}
+	install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local
+	ln -s ${STAGEDIR}/${PKG} vendor
+	#
+	cd source/${NAME}-${VER}; \
+	umask 002; \
+	export OBJECT_MODE=${BITS}; \
+	make install prefix=${STAGEDIR}/${PKG}${LOCALOPT}/local libdir=${STAGEDIR}/${PKG}${LOCALOPT}/local/lib${BITS}
+	#
+	# Fix perms and edit
+	#
+	echo "s/${STAGEDIR}\/${PKG}//g" > /tmp/stage.sed
+	chown -R root:web ${STAGEDIR}/${PKG}${LOCALOPT}/local
+	echo
+	for dir in `find ${STAGEDIR}/${PKG}${LOCALOPT}/local -type d`; do \
+	  echo "changing perms for directory $${dir}"; \
+	  chmod 2555 $${dir}; \
+	  chmod g+s $${dir}; \
+	done
+	echo
+	for file in `find ${STAGEDIR}/${PKG}${LOCALOPT}/local -type f`; do \
+	  echo "changing perms for file $${file}"; \
+	  chmod ugo-w $${file}; \
+	done
+	#
+	rm -rf ${STAGEDIR}/${PKG}${LOCALOPT}/local/share
+	rm -f /tmp/stage.sed
+
+#
+# Get zipped tar-balls from the author(s)
+#
+
+downloads:
+	cd ../downloads; \
+	rm -f ${NAME}-${VER}.tar.gz; \
+	wget ${SOURCEURL}/${NAME}-${VER}.tar.gz

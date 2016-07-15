@@ -1,0 +1,73 @@
+#
+# File: ICEdb/Makefile.local
+#
+# Note: none
+#
+# --------------------------------------------------------------------------
+# $Id: Makefile.local 4 2012-11-15 21:43:41Z svwebadmin $
+# --------------------------------------------------------------------------
+
+#
+# Build software
+#
+
+software: chk veryclean
+	
+	mkdir ${THISDIR}/source; cd ${THISDIR}/source; \
+	gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf -
+	cd source/${NAME}-${VER}/build_unix; \
+	unset LDFLAGS; \
+	../dist/configure --help > ${PWD}/${NAME}_${VER}_config.help; \
+	../dist/configure \
+	  --disable-static \
+	  --prefix=${LOCALOPT}/local \
+	  --libdir=${LOCALOPT}/local/lib${BITS} \
+	  --includedir=${LOCALOPT}/local/include/db${SHORT_VER} \
+	; install -m 666 ${PWD}/source/${NAME}-${VER}/build_unix/config.log ${PWD}/${NAME}_${VER}_config.log \
+	; install -m 666 ${PWD}/source/${NAME}-${VER}/README ${PWD}/${NAME}_${VER}_readme.txt \
+	; make 2>&1 | tee ${PWD}/${NAME}_${VER}_build.log; \
+
+#
+# Stage software
+#
+
+stage: chk
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -f vendor; \
+	  rm -Rf ${STAGEDIR}/${PKG}; \
+	"
+	 
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  install -d -m 755 -o root -g web  ${STAGEDIR}/${PKG}; \
+	  install -d -m 2775 -o root -g web  ${STAGEDIR}/${PKG}${LOCALOPT}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/bin; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/lib${BITS}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/include; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/include/db${SHORT_VER}; \
+	  ln -s ${STAGEDIR}/${PKG} vendor; \
+	"
+	 
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  umask 002; \
+	  export OBJECT_MODE=${BITS}; \
+	  cd source/${NAME}-${VER}/build_unix; \
+	  make DESTDIR=${STAGEDIR}/${PKG} install 2>&1 | tee ${PWD}/${NAME}_${VER}_stage.log; \
+	"
+	 
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -rf ${STAGEDIR}/${PKG}${LOCALOPT}/local/docs; \
+          chmod 664 ${STAGEDIR}/${PKG}${LOCALOPT}/local/lib${BITS}/*; \
+          chmod 755 ${STAGEDIR}/${PKG}${LOCALOPT}/local/bin/*; \
+	"
+
+#
+# Get zipped tar-balls from the author(s)
+#
+
+downloads:
+	
+	cd ../downloads; \
+	rm -f ${NAME}-*.tar.gz; \
+	wget --http-user=${HTTP_USER} --http-passwd=${HTTP_PASS} ${SOURCEURL}/${NAME}-${VER}.tar.gz

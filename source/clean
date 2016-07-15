@@ -1,0 +1,9 @@
+#!/bin/bash
+
+startDir=`pwd`
+for thisPkg in `ls -d ICE*`; do
+  cd ${thisPkg}
+  make veryclean
+  cd ${startDir}
+done
+

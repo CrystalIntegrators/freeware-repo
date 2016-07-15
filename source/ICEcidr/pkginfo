@@ -1,0 +1,41 @@
+#
+# NAME
+#
+#   ICEcidr/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for the ICEcidr package
+#
+# NOTES
+#
+#   blah
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+
+PKG=ICEcidr
+NAME=grepcidr
+VERSION=2.95
+VENDOR=Crystal Integrators
+HOTLINE=none
+EMAIL=support@crystalintegrators.com
+CATEGORY=application
+BASEDIR=/
+CLASSES=vendor
+
+#
+# non-standard ICE variables used in the package build
+#
+
+LOCALOPT=/opt
+SOURCEURL=http://www.taugh.com/grepcidr-2/

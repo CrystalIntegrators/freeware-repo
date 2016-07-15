@@ -1,0 +1,42 @@
+#
+# NAME
+#
+#   ICElua/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for the ICElua package
+#
+# NOTES
+#
+#   blah
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+
+PKG=ICElua
+NAME=lua
+# VERSION=5.3.1
+VERSION=5.2.4
+VENDOR=Crystal Integrators
+HOTLINE=none
+EMAIL=support@crystalintegrators.com
+CATEGORY=application
+BASEDIR=/
+CLASSES=vendor
+
+#
+# non-standard ICE variables used in the package build
+#
+
+LOCALOPT=/webapp
+SOURCEURL=http://www.lua.org/ftp

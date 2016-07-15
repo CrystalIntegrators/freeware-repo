@@ -1,0 +1,40 @@
+#
+# NAME
+#
+#   ICEhyper/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for the ICEhyper directory
+#
+# NOTES
+#
+#   blah
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+PKG=ICEhyper
+NAME=hyperic-hqee-agent
+VERSION=5.8.4,REV=0.1
+VENDOR=Crystal Integrators
+HOTLINE="none"
+EMAIL="admin@crystalintegrators.com"
+CATEGORY="application"
+BASEDIR=/
+CLASSES=vendor
+#
+# non-standard ICE variables
+# used in the package build
+#
+LOCALOPT=/webapp
+SOURCEURL=http://
+

@@ -1,0 +1,14 @@
+source/*/source/*
+staged/*
+archive/*
+**/vendor/*
+**/downloads/*
+**/prototype
+**/package.spec
+**/*_config.help
+**/*_config.log
+**/*_build.log
+**/*_stage.log
+**/*_readme.txt
+**/.*swp
+

@@ -1,0 +1,83 @@
+#
+# File: ICEcold/Makefile.local
+#
+# Note: none
+#
+# --------------------------------------------------------------------------
+# $Id: Makefile.local 4 2012-11-15 21:43:41Z svwebadmin $
+# --------------------------------------------------------------------------
+
+#
+# Build software
+#
+
+software: chk veryclean
+	
+	mkdir ${PWD}/source; cd ${PWD}/source; \
+	gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf -
+	cd  ${PWD}/source/${NAME}-${VER};\
+	export PKG_CONFIG_PATH=${LOCALOPT}/local/lib${BITS}/pkgconfig; \
+	PERL_BINDINGS_OPTIONS= ${STAGEDIR}/${PKG}${LOCALOPT}/local; \
+	./configure --help > ../../config.help; \
+	./configure \
+	  --prefix=${LOCALOPT}/local \
+	  --exec-prefix=${LOCALOPT}/local \
+	  --libdir=${LOCALOPT}/local/lib${BITS} \
+	  --enable-rrdtool \
+	  --enable-unixsock \
+	  --with-perl-bindings=${LOCALOPT}/local \
+	  --with-librrd=/usr/lib${BITS} \
+	  --with-java=${LOCALOPT}/java/1.7 \
+	; install -m 666 ${PWD}/source/${NAME}-${VER}/config.log ${PWD} \
+	; install -m 666 ${PWD}/source/${NAME}-${VER}/README ${PWD}/README.${NAME} \
+	; make
+
+#
+# Stage software
+#
+
+stage: chk
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -f vendor; \
+	  rm -Rf ${STAGEDIR}/${PKG}; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  install -d -m 755 -o root -g web ${STAGEDIR}/${PKG}; \
+	  install -d -m 2775 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/bin; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/sbin; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/etc; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/include; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/lib${BITS}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/share; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/var; \
+	  ln -s ${STAGEDIR}/${PKG} ${PWD}/vendor; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}/source/${NAME}-${VER}; \
+	  umask 002; \
+	  export OBJECT_MODE=${BITS}; \
+	  make install DESTDIR=${STAGEDIR}/${PKG}; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  mv ${STAGEDIR}/${PKG}${LOCALOPT}/local/etc/collectd.conf  ${STAGEDIR}/${PKG}${LOCALOPT}/local/etc/collectd.sample; \
+	  rm -rf ${STAGEDIR}/${PKG}${LOCALOPT}/local/man; \
+	  rm -f /tmp/stage.sed; \
+	"
+
+#
+# Get zipped tar-balls from the author(s)
+#
+
+downloads:
+	
+	cd ../downloads; \
+	--sudo ${SHELL} -c "\
+	  rm -f ${NAME}-*.tar.gz; \
+	  wget ${SOURCEURL}/files/${NAME}-${VER}.tar.gz; \
+	"
+

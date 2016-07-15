@@ -1,0 +1,41 @@
+#
+# NAME
+#
+#   ICEdnx/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for the ICEdnx package
+#
+# NOTES
+#
+#   requires libxml2, pango and cairo
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+
+PKG=ICEdnx
+NAME=dnx
+VERSION=0.20.1
+VENDOR=Crystal Integrators
+HOTLINE=none
+EMAIL=support@crystalintegrators.com
+CATEGORY=application
+BASEDIR=/
+CLASSES=vendor
+
+#
+# non-standard ICE variables used in the package build
+#
+
+LOCALOPT=/webapp
+SOURCEURL=http://sourceforge.net/projects/${NAME}/files/nagios-4x

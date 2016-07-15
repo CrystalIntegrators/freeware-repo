@@ -1,0 +1,41 @@
+#
+# NAME
+#
+#   ICEcold/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for the ICEcold directory
+#
+# NOTES
+#
+#   blah
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+PKG=ICEcold
+NAME=collectd
+VERSION=5.4.2
+VENDOR=Crystal Integrators
+HOTLINE="none"
+EMAIL="support@crystalintegrators.com"
+CATEGORY="application"
+ARCH="sparc"
+BASEDIR=/
+CLASSES=vendor
+#
+# non-standard ICE variables
+# used in the package build
+#
+LOCALOPT=/webapp
+SOURCEURL=http://collectd.org
+

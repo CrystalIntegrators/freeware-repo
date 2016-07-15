@@ -1,0 +1,46 @@
+#
+# NAME
+#
+#   ICEhttpd/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for ICEhttpd package
+#
+# NOTES
+#
+#   blah
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+PKG=ICEhttpd
+NAME=httpd
+  VERSION=2.2.31
+# VERSION=2.4.20
+# APRVER=1.5.2
+# APRUTILVER=1.5.4
+# DBVER=db53
+# DBVER=db61
+VENDOR=Crystal Integrators
+HOTLINE="none"
+EMAIL="support@crystalintegrators.com"
+CATEGORY="application"
+CLASSES=vendor local
+MAXINST=3
+
+#
+# non-standard ICE variables
+# used in the package build
+#
+LOCALOPT=/opt
+SOURCEURL=http://www.apache.org/dist/httpd
+

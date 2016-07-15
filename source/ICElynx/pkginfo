@@ -1,0 +1,40 @@
+#
+# NAME
+#
+#   ICElynx/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for the ICElynx directory
+#
+# NOTES
+#
+#   blah
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+PKG=ICElynx
+NAME=lynx
+VERSION=2.8.8
+VENDOR=Crystal Integrators
+HOTLINE="none"
+EMAIL="support@crystalintegrators.com"
+CATEGORY="application"
+ARCH="sparc"
+BASEDIR=/
+CLASSES=vendor
+#
+# non-standard ICE variables
+# used in the package build
+#
+LOCALOPT=/opt
+SOURCEURL=http://invisible-mirror.net/archives/lynx/tarballs

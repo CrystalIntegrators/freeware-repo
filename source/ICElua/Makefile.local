@@ -1,0 +1,65 @@
+#
+# File: ICEzlib/Makefile.local
+#
+# Note: none
+#
+#	make `echo ${OSNAME} | tr '[:upper:]' '[:lower:]'` 2>&1 | tee ${PWD}/${NAME}_build.log
+#
+# --------------------------------------------------------------------------
+# $Id: Makefile.local 4 2012-11-15 21:43:41Z svwebadmin $
+# --------------------------------------------------------------------------
+
+#
+# Build software
+#
+
+software: chk veryclean
+	
+	mkdir ${PWD}/source; cd ${PWD}/source; \
+	gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf -
+	cd ${PWD}/source/${NAME}-${VER}; \
+	make `echo ${OSNAME} | tr '[:upper:]' '[:lower:]'` 2>&1 | tee ${PWD}/${NAME}_build.log
+
+#
+# Stage software
+#
+
+stage: chk
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -f vendor; \
+	  rm -Rf ${STAGEDIR}/${PKG}; \
+	"
+	 
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  install -d -m 775 -o root -g webadmin ${STAGEDIR}/${PKG}; \
+	  install -d -m 2775 -o root -g webadmin ${STAGEDIR}/${PKG}${LOCALOPT}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/bin; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/lib${BITS}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/include; \
+	  ln -s ${STAGEDIR}/${PKG} vendor; \
+	"
+	 
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  umask 002; \
+	  export OBJECT_MODE=${BITS}; \
+	  cd source/${NAME}-${VER}; \
+	  sed -i "s@/usr/@${STAGEDIR}/${PKG}${LOCALOPT}/@g" Makefile; \
+	  sed -i "s@/lib$ @/lib${BITS}@g" Makefile; \
+	  make install 2>&1 | tee ${PWD}/${NAME}_stage.log; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -rf ${STAGEDIR}/${PKG}${LOCALOPT}/local/share; \
+	"
+
+#
+# Get zipped tar-balls from the author(s)
+#
+
+downloads:
+	
+	cd ../downloads; \
+	rm -f ${NAME}-${VER}.tar.gz; \
+	wget ${SOURCEURL}/${NAME}-${VER}.tar.gz

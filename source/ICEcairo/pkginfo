@@ -1,0 +1,63 @@
+#
+# NAME
+#
+#   ICEcairo/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for the ICEcairo package
+#
+# Note:
+#
+#   requires:
+#
+#     ICEzlib
+#     ICEpng
+#     ICEfrtype
+#     ICEfconfig
+#
+#     cairo-png  --  http://cairographics.org/releases/
+#     cairo-svg  --  http://cairographics.org/releases/
+#     cairo-pdf  --  http://cairographics.org/releases/
+#     cairo-ps   --  http://cairographics.org/releases/
+#     pixman     --  http://cairographics.org/releases/
+#
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+
+PKG=ICEcairo
+NAME=cairo
+psNAME=cairo-png
+svgNAME=cairo-svg
+pdfNAME=cairo-pdf
+psNAME=cairo-ps
+pixNAME=pixman
+VERSION=1.14.0
+psVERSION=1.14.0
+svgVERSION=1.14.0
+pdfVERSION=1.14.0
+psVERSION=1.14.0
+pixVERSION=0.32.8
+VENDOR=Crystal Integrators
+HOTLINE=none
+EMAIL=support@crystalintegrators.com
+CATEGORY=application
+BASEDIR=/
+CLASSES=vendor
+
+#
+# non-standard ICE variables used in the package build
+#
+
+LOCALOPT=/webapp
+SOURCEURL=http://cairographics.org/releases

@@ -1,0 +1,40 @@
+#
+# NAME
+#
+#   ICEcurl/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for the ICEphp directory
+#
+# NOTES
+#
+#   blah
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+PKG=ICEcurl
+NAME=curl
+VERSION=7.40.0
+VENDOR=Crystal Integrators
+HOTLINE="none"
+EMAIL="admin@crystalintegrators.com"
+CATEGORY="application"
+BASEDIR=/
+CLASSES=vendor
+#
+# non-standard ICE variables
+# used in the package build
+#
+LOCALOPT=/webapp
+SOURCEURL=http://curl.haxx.se
+

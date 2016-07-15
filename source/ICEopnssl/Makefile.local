@@ -1,0 +1,100 @@
+#
+# File: ICEopnssl/Makefile.local
+#
+# Notes:
+#
+#  OpenSSL doesn't use libtool, and the provided configuration tool
+#  requires some brute-force manipulation in our environment.  
+#  The 'software' section invokes a dummy "Configure" to create the "Makefile.org"
+#  file, which is then edited so that we link against a static gcclib
+#  (AIX doesn't ship one by default, obviously, and we want to be 
+#  consistant accross OS builds) and we want a hard-coded RPATH
+#  value in libssl so rogue libarary search paths don't screp us up.
+#  Once Makefile.org is edited, we run the real Configure for the build
+#   
+# --------------------------------------------------------------------------
+# $Id: Makefile.local 4 2012-11-15 21:43:41Z svwebadmin $
+# --------------------------------------------------------------------------
+
+#####
+###
+#
+# Build software
+#
+ 
+software: chk veryclean
+	 
+	mkdir ${PWD}/source; cd ${PWD}/source; \
+	gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf -
+	cd source/${NAME}-${VER}; \
+	./Configure --help 2>&1 > ${PWD}/${NAME}_config.help; \
+	./Configure ${COMPILER}; \
+	sed -i "s@^CC= cc@CC= cc -static-libgcc@g" Makefile.org; \
+	if [ ${OSNAME} == 'AIX' ]; then \
+	  sed -i "s@SHLIBDEPS='-lcrypto'@SHLIBDEPS='-lcrypto -Wl,-R$$\{INSTALLTOP\}/lib${BITS}'@g" Makefile.org; \
+	else \
+	  sed -i "s@SHLIBDEPS='-lcrypto'@SHLIBDEPS='-lcrypto -Wl,-rpath $$\{INSTALLTOP\}/lib${BITS}'@g" Makefile.org; \
+	fi; \
+	make dclean; \
+	./Configure \
+	  shared \
+	  no-asm \
+	  --prefix=${LOCALOPT}/local \
+	  --openssldir=${LOCALOPT}/local/etc \
+	  --libdir=lib${BITS} \
+	  ${COMPILER} \
+	  2>&1 | tee ${PWD}/${NAME}_config.log \
+	; install -m 666 ${PWD}/source/${NAME}-${VER}/README ${PWD}/${NAME}_readme.txt \
+	; make depend 2>&1 | tee ${PWD}/${NAME}_depend.log \
+	; make 2>&1 | tee ${PWD}/${NAME}_build.log
+
+
+#
+# Stage software
+#
+
+stage: chk
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  rm -f vendor; \
+	  rm -Rf ${STAGEDIR}/${PKG}; \
+	"
+	 
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  install -d -m 755 -o root -g webadmin ${STAGEDIR}/${PKG}; \
+	  install -d -m 2775 -o root -g webadmin ${STAGEDIR}/${PKG}/${LOCALOPT}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/${LOCALOPT}/local; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/${LOCALOPT}/local/bin; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/${LOCALOPT}/local/include; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/${LOCALOPT}/local/etc; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/${LOCALOPT}/local/include/${NAME}; \
+	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}/${LOCALOPT}/local/lib${BITS}; \
+	  ln -s ${STAGEDIR}/${PKG} vendor; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  umask 002; \
+	  export OBJECT_MODE=${BITS}; \
+	  cd source/${NAME}-${VER}; \
+	  make INSTALL_PREFIX=${STAGEDIR}/${PKG} install 2>&1 | tee ${PWD}/${NAME}_stage.log; \
+	"
+	
+	--sudo ${SHELL} -c "cd ${PWD}; \
+	  mv ${STAGEDIR}/${PKG}/${LOCALOPT}/local/etc/openssl.cnf ${STAGEDIR}/${PKG}/${LOCALOPT}/local/etc/openssl.tmpl; \
+	  rm -rf ${STAGEDIR}/${PKG}/${LOCALOPT}/local/etc/certs; \
+	  rm -rf ${STAGEDIR}/${PKG}/${LOCALOPT}/local/etc/man; \
+	  rm -rf ${STAGEDIR}/${PKG}/${LOCALOPT}/local/etc/misc; \
+	  rm -rf ${STAGEDIR}/${PKG}/${LOCALOPT}/local/etc/private; \
+	  rm -f /tmp/stage.sed; \
+	"
+
+#
+# Get zipped tar-balls from the author(s)
+#
+
+downloads:
+	
+	cd ../downloads; \
+	rm -f ${NAME}-${VER}.tar.gz; \
+	wget ${SOURCEURL}/${NAME}-${VER}.tar.gz
+
