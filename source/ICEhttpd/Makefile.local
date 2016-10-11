@@ -118,6 +118,7 @@ software: chk veryclean
 	    --enable-xml2enc=static \
 	    --enable-negotiation=static \
 	    --enable-proxy_connect=static \
+	    --enable-proxy_connect=hcheck \
 	    --enable-proxy_express=static \
 	    --enable-proxy_html=static \
 	    --enable-proxy_fcgi=static \
@@ -163,6 +164,7 @@ software: chk veryclean
 	    --enable-imagemap=static \
 	    --enable-reqtimeout=static \
 	    --enable-mime-magic=static \
+	    --enable-watchdog=static \
 	  ; install -m 666 ${PWD}/source/${NAME}-${VER}/config.log ${PWD}/config.log \
 	  ; install -m 666 ${PWD}/source/${NAME}-${VER}/README ${PWD}/readme.txt \
 	  ; make 2>&1 | tee ${PWD}/${NAME}_${VER}_build.log; \
