@@ -42,13 +42,7 @@ stage: chk
 	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/lib${BITS}; \
 	  install -d -m 2555 -o root -g web ${STAGEDIR}/${PKG}${LOCALOPT}/local/include; \
 	  ln -s ${STAGEDIR}/${PKG} vendor; \
-	  echo "s@^read.*REDIS_PORT$@REDIS_PORT=nnnn@" > /tmp/config.sed
-	  echo "s@^read.*REDIS_CONFIG_FILE@REDIS_CONFIG_FILE=${LOCALOPT}/local/etc@" >> /tmp/config.sed
-	  echo "s@^read.*REDIS_LOG_FILE@REDIS_LOG_FILE=${LOCALOPT}/local/etc@" >> /tmp/config.sed
-	  echo "s@^read.*REDIS_DATA_DIR@REDIS_DATA_DIR=${LOCALOPT}/local/etc@" >> /tmp/config.sed
-	  echo "s@^read.*REDIS_EXECUTABLE@REDIS_EXECUTABLE=${LOCALOPT}/local/etc@" >>/tmp/config.sed
 	"
-
 	 
 	--sudo ${SHELL} -c "cd ${PWD}; \
 	  umask 002; \

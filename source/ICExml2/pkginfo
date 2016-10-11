@@ -25,7 +25,7 @@
 
 PKG=ICExml2
 NAME=libxml2
-VERSION=2.8.0
+VERSION=2.9.4
 VENDOR=Crystal Integrators
 HOTLINE=none
 EMAIL=support@crystalintegrators.com

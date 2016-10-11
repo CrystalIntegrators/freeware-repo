@@ -1,7 +1,9 @@
 #
 # File: ICEzlib/Makefile.local
 #
-# Note: none
+# Note: 
+#
+#  Requires gradle 2.0 or higher
 #
 # --------------------------------------------------------------------------
 # $Id: Makefile.local 4 2012-11-15 21:43:41Z svwebadmin $
@@ -11,11 +13,11 @@
 # Build software
 #
 
-software: chk veryclean
+software: chk clean
 	
 	mkdir ${PWD}/source; cd ${PWD}/source; \
-	gzip -dc ../../downloads/${NAME}-${VER}.tar.gz | tar xvf -
-	cd ${PWD}/source/${NAME}-${VER}; \
+	gzip -dc ../../downloads/${NAME}-${VER}-src.tgz | tar xvf -
+	cd ${PWD}/source/${NAME}-${VER}-src; \
 	./configure --help > ${PWD}/${NAME}_config.help; \
 	./configure \
 	  --prefix=${LOCALOPT}/local \
@@ -69,5 +71,6 @@ stage: chk
 downloads:
 	
 	cd ../downloads; \
-	rm -f ${NAME}-${VER}.tar.gz; \
-	wget ${SOURCEURL}/${NAME}-${VER}.tar.gz
+	rm -f ${NAME}-${VER}.tgz; \
+	wget ${SOURCEURL}/${NAME}/${VER}/${NAME}-${VER}-src.tgz
+

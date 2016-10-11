@@ -25,7 +25,7 @@
 
 PKG=ICEpcre
 NAME=pcre
-VERSION=8.36
+VERSION=8.39
 VENDOR=Crystal Integrators
 HOTLINE=none
 EMAIL=support@crystalintegrators.com
@@ -38,4 +38,5 @@ CLASSES=vendor
 #
 
 LOCALOPT=/webapp
-SOURCEURL=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre
+SOURCEURL=https://sourceforge.net/projects/${NAME}/files/${NAME}/${VERSION}
+

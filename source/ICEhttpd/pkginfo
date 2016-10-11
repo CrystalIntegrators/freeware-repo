@@ -24,12 +24,12 @@
 #----------------------------------------------------------------------------
 PKG=ICEhttpd
 NAME=httpd
-  VERSION=2.2.31
-# VERSION=2.4.20
-# APRVER=1.5.2
-# APRUTILVER=1.5.4
+# VERSION=2.2.31
+  VERSION=2.4.23
+  APRVER=1.5.2
+  APRUTILVER=1.5.4
 # DBVER=db53
-# DBVER=db61
+  DBVER=db62
 VENDOR=Crystal Integrators
 HOTLINE="none"
 EMAIL="support@crystalintegrators.com"

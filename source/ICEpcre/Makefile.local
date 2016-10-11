@@ -72,4 +72,5 @@ downloads:
 	
 	cd ../downloads; \
 	rm -f ${NAME}-${VER}.tar.gz; \
-	wget ${SOURCEURL}/${NAME}-${VER}.tar.gz
+	wget ${SOURCEURL}/${NAME}-${VERSION).tar.gz/download
+

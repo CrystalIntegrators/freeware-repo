@@ -38,4 +38,4 @@ CLASSES=vendor
 #
 
 LOCALOPT=/webapp
-SOURCEURL=ftp://xmlsoft.org/
+SOURCEURL=http://xmlsoft.org/sources

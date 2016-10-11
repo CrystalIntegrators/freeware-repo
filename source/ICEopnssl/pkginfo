@@ -37,4 +37,4 @@ CLASSES=vendor
 # used in package build
 #
 LOCALOPT=/webapp
-SOURCEURL=ftp://www.openssl.org/source
+SOURCEURL=https://www.openssl.org/source
