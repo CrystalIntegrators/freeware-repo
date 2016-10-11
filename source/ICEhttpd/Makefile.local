@@ -118,7 +118,7 @@ software: chk veryclean
 	    --enable-xml2enc=static \
 	    --enable-negotiation=static \
 	    --enable-proxy_connect=static \
-	    --enable-proxy_connect=hcheck \
+	    --enable-proxy_hcheck=static \
 	    --enable-proxy_express=static \
 	    --enable-proxy_html=static \
 	    --enable-proxy_fcgi=static \
