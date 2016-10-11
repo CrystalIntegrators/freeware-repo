@@ -25,7 +25,7 @@
 
 PKG=ICEldap
 NAME=openldap
-VERSION=2.4.42
+VERSION=2.4.44
 DBVER=6.1
 VENDOR=Crystal Integrators
 HOTLINE=none

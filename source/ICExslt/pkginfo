@@ -25,7 +25,7 @@
 
 PKG=ICExml2
 NAME=libxslt
-VERSION=1.1.28
+VERSION=1.1.29
 VENDOR=Crystal Integrators
 HOTLINE=none
 EMAIL=support@crystalintegrators.com

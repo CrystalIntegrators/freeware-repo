@@ -24,7 +24,7 @@
 #----------------------------------------------------------------------------
 PKG=ICEcurl
 NAME=curl
-VERSION=7.40.0
+VERSION=7.50.3
 VENDOR=Crystal Integrators
 HOTLINE="none"
 EMAIL="admin@crystalintegrators.com"
