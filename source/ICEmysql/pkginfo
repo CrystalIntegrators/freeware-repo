@@ -1,0 +1,41 @@
+#
+# NAME
+#
+#   ICEmysql/pkginfo
+#
+# USAGE
+#
+#   included by ../Makefile
+#
+# DESCRIPTIONS
+#
+#   pkginfo file for the ICEzlib package
+#
+# NOTES
+#
+#   blah
+#
+# AUTHOR
+#
+#   Rick Swanson
+#
+#----------------------------------------------------------------------------
+# $Id: pkginfo 4 2012-11-15 21:43:41Z svwebadmin $
+#----------------------------------------------------------------------------
+
+PKG=ICEmysql
+NAME=mysql
+VERSION=5.7.16
+VENDOR=Crystal Integrators
+HOTLINE=none
+EMAIL=support@crystalintegrators.com
+CATEGORY=application
+BASEDIR=/
+CLASSES=vendor
+
+#
+# non-standard ICE variables used in the package build
+#
+
+LOCALOPT=/webapp
+SOURCEURL=http://dev.mysql.com/get/Downloads/MySQL-5.7
