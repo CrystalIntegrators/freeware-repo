@@ -24,7 +24,7 @@
 #----------------------------------------------------------------------------
 
 PKG=ICEmysql
-NAME=mysql
+NAME=mysql-boost
 VERSION=5.7.16
 VENDOR=Crystal Integrators
 HOTLINE=none
