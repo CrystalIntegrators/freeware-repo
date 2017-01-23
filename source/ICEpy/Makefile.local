@@ -18,6 +18,7 @@ software: chk veryclean
 	echo "s@lib/python@lib${BITS}/python@g" > /tmp/chk.sed
 	./scripts/runsed.sh source/${NAME}-${VER}/Modules getpath.c /tmp/chk.sed  
 	cd source/${NAME}-${VER}; \
+	export LN="ln -s"; \
 	export PKG_CONFIG_PATH=${LOCALOPT}/local/lib${BITS}/pkgconfig; \
 	export PYTHONPATH=${LOCALOPT}/local/lib${BITS}; \
 	./configure \
